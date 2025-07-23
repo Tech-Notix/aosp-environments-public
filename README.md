@@ -14,8 +14,7 @@ This repository contains scripts and environment setup for building multiple And
   - [`download_aosp.sh`](#download_aospsh)
   - [`build_aosp.sh`](#build_aospsh)
   - [`build_docker.sh`](#build_dockersh)
-- [Device Configurations](#device-configurations)
-- [Adding New Devices](#adding-new-devices)
+- [Supporting New Devices](#supporting-new-devices)
 
 ---
 
@@ -129,39 +128,16 @@ Builds the Docker image for the selected Android version.
 
 ---
 
-## Device Configurations
 
-- Device-specific files, kernel trees, and configurations should be placed under the corresponding Android version folder or a dedicated `devices` directory.
-- Example structure:
+## Supporting New Devices
 
-```
-workspace/
-└── targets/
-    └── android_15/
-        ├── device/
-        ├── kernel/
-        └── config.sh
-```
+1. Make a duplicate template folder inside the targets directory.
 
-- The `config.sh` inside each Android version folder can specify device names, branches, and other build options.
+2. Rename the directory to match it's purpo se  (e.g., `targets/android_<name>_<dev/release>`).
 
----
+3. Update the `config.sh` with proper device specific paths and commands.
 
-## Adding New Devices
-
-1. Create a new folder inside the appropriate Android version directory (e.g., `android_15/device/<vendor>/<device_name>`).
-
-2. Add device configuration files, kernel source, and vendor blobs as needed.
-
-3. Update or create the `config.sh` inside the Android version folder to reference the new device and any custom build settings.
-
-4. Select the Android version and device by:
-
-    ```bash
-    use_android android_15
-    export LUNCH_TARGET=<device_lunch_combo>
-    ./build_aosp.sh
-    ```
+4. Update the `Dockerfile` with required packages.
 
 ---
 
@@ -169,7 +145,5 @@ workspace/
 
 - Use tab completion with `use_android` to list available Android versions.
 - Always run `download_aosp.sh` before building if sources are not already synced.
-- You can customize `LUNCH_TARGET` before running `build_aosp.sh` for specific device builds.
-
 ---
 
