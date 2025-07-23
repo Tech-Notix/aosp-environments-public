@@ -1,0 +1,8 @@
+_use_android_completions() {
+    local cur prev
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${AOSP_TARGETS[*]}" -- "$cur") )
+    return 0
+}
+complete -F _use_android_completions use_android
